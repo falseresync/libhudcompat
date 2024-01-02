@@ -1,0 +1,21 @@
+{
+	"schemaVersion": 1,
+	"id": "libhudcompat",
+	"version": "${version}",
+	"name": "LibHudCompat",
+	"description": "A tiny compatibility layer for different mods with HUDs based on R-Tree searching",
+	"authors": [
+		"falseresync"
+	],
+	"contact": {
+		"issues": "https://github.com/falseresync/libhudcompat/issues",
+		"sources": "https://github.com/falseresync/libhudcompat"
+	},
+	"license": "Apache-2.0",
+	"environment": "client",
+	"depends": {
+		"fabric-loader": "*",
+		"minecraft": "*",
+		"java": ">=17"
+	}
+}
