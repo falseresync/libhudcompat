@@ -1,17 +1,20 @@
 # LibHudCompat
 
 ## Maven
+
+See the latest version on GitHub Releases
+
 ```groovy
 repositories {
-    maven {
-        url "https://repo.repsy.io/mvn/falseresync/default"
-        content {
-            includeGroup "dev.falseresync"
+    maven { 
+        url "https://jitpack.io"
+        content { 
+            includeGroup "com.github.falseresync" 
         }
     }
 }
 
 dependencies {
-    modImplementation include("dev.falseresync:libhudcompat:[VERSION]")
+    modImplementation include("com.github.falseresync:libhudcompat:[VERSION]")
 }
 ```

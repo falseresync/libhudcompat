@@ -57,14 +57,4 @@ publishing {
 			from components.java
 		}
 	}
-
-	repositories {
-		maven {
-			url 'https://repo.repsy.io/mvn/falseresync/default'
-			credentials {
-				username System.getenv("MAVEN_USERNAME")
-				password System.getenv("MAVEN_PASSWORD")
-			}
-		}
-	}
 }
