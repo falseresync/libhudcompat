@@ -14,8 +14,6 @@
 	"license": "Apache-2.0",
 	"environment": "client",
 	"depends": {
-		"fabric-loader": "*",
-		"minecraft": "*",
 		"java": ">=17"
 	}
 }
