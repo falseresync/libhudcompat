@@ -58,14 +58,10 @@ public class LibHudCompat {
      * Ignore other occupants and occupy a region
      */
     public static void freeRegion(Identifier id) {
-        var entry = entries.get(id);
+        var entry = entries.remove(id);
         if (entry != null) {
             tree = tree.delete(entry);
-            listeners.forEach((listenerRegion, listener) -> {
-                if (isRegionFree(listenerRegion)) {
-                    listener.onRegionChange(RegionChange.OCCUPIED);
-                }
-            });
+            notifyListeners(RegionChange.FREED, entry.geometry());
         }
     }
 
@@ -90,20 +86,29 @@ public class LibHudCompat {
         var entry = Entries.entry(id, region);
         entries.put(id, entry);
         tree = tree.add(entry);
-        listeners.forEach((listenerRegion, listener) -> {
-            if (!isRegionFree(listenerRegion)) {
-                listener.onRegionChange(RegionChange.OCCUPIED);
-            }
-        });
+        notifyListeners(RegionChange.OCCUPIED, region);
     }
 
-    @FunctionalInterface
-    public interface RegionChangeListener {
-        void onRegionChange(RegionChange change);
+    @ApiStatus.Internal
+    protected static void notifyListeners(RegionChange change, Rectangle region) {
+        listeners.forEach((listenerRegion, listener) -> {
+            if (!listenerRegion.intersects(region)) {
+                var x = (int) (Math.max(region.x1(), listenerRegion.x1()));
+                var y = (int) (Math.max(region.y1(), listenerRegion.y1()));
+                var width = (int) (Math.min(region.x2(), listenerRegion.x2()) - x);
+                var height = (int) (Math.min(region.y2(), listenerRegion.y2()) - y);
+                listener.onRegionChange(change, x, y, width, height);
+            }
+        });
     }
 
     public enum RegionChange {
         OCCUPIED,
         FREED
+    }
+
+    @FunctionalInterface
+    public interface RegionChangeListener {
+        void onRegionChange(RegionChange change, int x, int y, int width, int height);
     }
 }
