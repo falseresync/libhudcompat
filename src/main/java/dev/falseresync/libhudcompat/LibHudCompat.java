@@ -93,10 +93,10 @@ public class LibHudCompat {
     protected static void notifyListeners(RegionChange change, Rectangle region) {
         listeners.forEach((listenerRegion, listener) -> {
             if (!listenerRegion.intersects(region)) {
-                var x = (int) (Math.max(region.x1(), listenerRegion.x1()));
-                var y = (int) (Math.max(region.y1(), listenerRegion.y1()));
-                var width = (int) (Math.min(region.x2(), listenerRegion.x2()) - x);
-                var height = (int) (Math.min(region.y2(), listenerRegion.y2()) - y);
+                var x = (int) (Math.min(region.x1(), listenerRegion.x1()));
+                var y = (int) (Math.min(region.y1(), listenerRegion.y1()));
+                var width = (int) (Math.max(region.x2(), listenerRegion.x2()) - x);
+                var height = (int) (Math.max(region.y2(), listenerRegion.y2()) - y);
                 listener.onRegionChange(change, x, y, width, height);
             }
         });
