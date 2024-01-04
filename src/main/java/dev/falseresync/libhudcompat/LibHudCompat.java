@@ -92,7 +92,7 @@ public class LibHudCompat {
     @ApiStatus.Internal
     protected static void notifyListeners(RegionChange change, Rectangle region) {
         listeners.forEach((listenerRegion, listener) -> {
-            if (!listenerRegion.intersects(region)) {
+            if (listenerRegion.intersects(region)) {
                 var x = (int) (Math.min(region.x1(), listenerRegion.x1()));
                 var y = (int) (Math.min(region.y1(), listenerRegion.y1()));
                 var width = (int) (Math.max(region.x2(), listenerRegion.x2()) - x);
